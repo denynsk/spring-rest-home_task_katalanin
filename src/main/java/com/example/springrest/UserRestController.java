@@ -4,23 +4,24 @@ import com.example.springrest.entity.User;
 import com.example.springrest.exceptions.UserNotFoundException;
 import com.example.springrest.service.RepositoryStubService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//1
+@RestController
 public class UserRestController {
 
 
     @Autowired
     private RepositoryStubService repositoryService;
 
-   // 2
+   @GetMapping("AllUser")
     public List<User> listAllUsers() {
         return repositoryService.findAll();
     }
 
-    //3
-    public User getUserById(/*4*/ Long id) {
+    @GetMapping("UserById/{id}")
+    public User getUserById(@PathVariable("id") Long id) {
         User user = repositoryService.findUserById(id);
         if (user == null) {
             throw new UserNotFoundException(id);
@@ -28,13 +29,13 @@ public class UserRestController {
         return user;
     }
 
-    //5
-    public User createUser(/* 6 */ User newUser) {
+    @PostMapping("createUser")
+    public User createUser(@RequestBody() User newUser) {
         return repositoryService.saveUser(newUser);
     }
 
-    //7
-    public User updateUser(/* 8 */ Long id, /* 9 */ User updatedUser) {
+    @PutMapping("updateUser")
+    public User updateUser(@RequestParam("id") Long id, @RequestBody User updatedUser) {
         User userToUpdate = repositoryService.findUserById(id);
         if (userToUpdate != null) {
             userToUpdate.setFirstName(updatedUser.getFirstName());
@@ -48,8 +49,8 @@ public class UserRestController {
         }
     }
 
-   // 10
-    public void deleteUser(/* 11 */ Long id) {
+   @DeleteMapping("DelUser")
+    public void deleteUser(@RequestParam("id") Long id) {
         repositoryService.deleteById(id);
     }
 
