@@ -49,7 +49,7 @@ public class UserRestController {
         }
     }
 
-   @DeleteMapping("DelUser")
+   @DeleteMapping("delUser")
     public void deleteUser(@RequestParam("id") Long id) {
         repositoryService.deleteById(id);
     }
