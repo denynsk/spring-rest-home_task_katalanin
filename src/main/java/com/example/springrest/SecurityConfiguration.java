@@ -20,7 +20,7 @@ public class SecurityConfiguration {
     {
         http.authorizeHttpRequests((httpz) ->
             httpz.antMatchers("/AllUser").authenticated()
-                 .antMatchers("/UserById").authenticated()
+                 .antMatchers("/UserById/**").authenticated()
                  .antMatchers("/createUser").hasRole("ROLE1")
                  .antMatchers("/updateUser").hasRole("ROLE1")
                  .antMatchers("/delUser").hasRole("ROLE1")
